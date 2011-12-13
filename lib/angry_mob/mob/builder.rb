@@ -180,16 +180,23 @@ class AngryMob
 				node_setup_blocks << blk
 			end
 
+      alias_method :configure_node_before, :setup_node
+
 
 			def consolidate_node(&blk)
 				@node_consolidation_block = blk
 			end
+
+      alias_method :configure_node_after, :consolidate_node
 
 
 			# Defaults
 			def node_defaults(&blk)
 				node_default_blocks << blk
 			end
+
+      alias_method :configure_node, :node_defaults
+
 
 
 			protected
