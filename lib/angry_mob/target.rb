@@ -26,6 +26,7 @@ class AngryMob
 
 
     attr_reader :ui, :node, :definition_file, :args, :current_action
+    attr_reader :act, :act_scheduler
 
 
     def initialize(act, args, &blk)
@@ -36,6 +37,8 @@ class AngryMob
 
 
     def bind_act(act)
+      @act             = act
+
       @definition_file = act.definition_file
       @ui              = act.ui
       @node            = act.node

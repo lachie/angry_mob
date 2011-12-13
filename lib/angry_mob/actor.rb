@@ -32,9 +32,9 @@ class AngryMob
 
 
       # XXX pass in anything?
-      def build_instance( node, options, *arguments )
+      def build_instance( node, act_scheduler, options, *arguments )
         if klass = ( @build_block && @build_block[ *arguments ] ) || self
-          klass.new(node)
+          klass.new(node, act_scheduler)
         end
 
         # XXX use an abstract keyword, to stop instantiating the base class
@@ -52,8 +52,9 @@ class AngryMob
     def ui; Rioter.ui end
 
 
-    def initialize(node)
+    def initialize(node, act_scheduler)
       @node = node
+      @act_scheduler = act_scheduler
     end
 
 

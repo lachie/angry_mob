@@ -30,7 +30,6 @@ class AngryMob
 
     # Binds the act to the rioter.
     def bind_rioter(rioter)
-			puts "binding rioter"
 			@act_scheduler = rioter.act_scheduler
 
       @act_scheduler.add_act @name, self
@@ -71,7 +70,7 @@ class AngryMob
     def in_sub_act(*args, &blk)
       sub_act = self.class.new(NullMobInstance, definition_file, "#{name}-sub-#{generate_random_name}", {:multi => true}, &blk)
       sub_act.bind_act(self)
-      sub_act.run!(*args)
+      sub_act.run!(@node, *args)
     end
 
 

@@ -38,7 +38,7 @@ class AngryMob
       end
 
 
-      # API
+      # act API implementation
       def act_now(act_name, options, *arguments)
         act, act_name = *resolve_act( act_name, options, *arguments )
 
@@ -64,7 +64,7 @@ class AngryMob
       end
 
 
-      # API
+      # act API implementation
       def fire(event)
         ui.sigil '->', event, :green
         @event_queue.unshift event
@@ -119,8 +119,8 @@ class AngryMob
 
         elsif act_or_name.is_a?(Module) && act_or_name < AngryMob::Actor
           # XXX might want to bind the act?
-          act      = act_or_name.build_instance( @node, options, *arguments )
-          act_name = act.name
+          act               = act_or_name.build_instance( @node, self, options, *arguments )
+          act_name          = act.name
 
         else
           act_name = act_or_name
