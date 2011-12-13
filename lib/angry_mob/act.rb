@@ -56,15 +56,13 @@ class AngryMob
 			@node = node
 
       ui.push("act '#{name}'", :bubble => true) do
-        @running = true
-
-        begin
-          instance_exec *arguments, &@blk
-        rescue
-          raise_runtime_error($!)
+        AngryMob::Act::Api.running do
+          begin
+            instance_exec *arguments, &@blk
+          rescue
+            raise_runtime_error($!)
+          end
         end
-
-        @running = false
       end
     end
 
