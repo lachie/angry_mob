@@ -1,5 +1,6 @@
 source :rubygems
 
-gem 'exemplor'
+gem 'exemplor', :git => 'https://github.com/plustwo/exemplor.git', :branch => 'master3k'
 gem 'citrus'
+gem 'awesome_print'
 

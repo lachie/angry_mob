@@ -25,14 +25,24 @@ class AngryMob
         # class and the file on AngryMob::Target::Tracking. This is the method responsible for it.
         #
         def register_klass_file(klass) #:nodoc:
+          nickname = klass.nickname.to_s
           file = caller[1].match(/(.*):\d+/)[1]
 
-          nickname = klass.nickname.to_s
+          klass.definition_file = file
+
           AngryMob::Target::Tracking.subclasses[nickname] = klass unless AngryMob::Target::Tracking.subclasses.key?(nickname)
 
           file_subclasses = AngryMob::Target::Tracking.subclass_files[File.expand_path(file)]
           file_subclasses << klass unless file_subclasses.include?(klass)
         end
+      end
+
+
+      # The file in which the target class was defined
+      #
+      # Delegates to the target's class
+      def definition_file
+        self.class.definition_file
       end
 
 
@@ -78,6 +88,18 @@ class AngryMob
           end
         end
 
+
+        def definition_file=(definition_file)
+          @definition_file = definition_file
+        end
+
+        def definition_file; @definition_file end
+
+        def definition_file_chain
+          from_superclass_chain(:definition_file).tapp(:defs)
+        end
+        
+
         protected
 
         # Retrieves a value from superclass. If it reaches the baseclass,
@@ -89,6 +111,21 @@ class AngryMob
             value = superclass.send(method)
             value.dup if value
           end
+        end
+
+
+        # Retrieves the chain of values up the superclass chain.
+        def from_superclass_chain(method)
+          values = []
+
+          next_superclass = self
+
+          until next_superclass == baseclass || ! next_superclass.respond_to?(method, true)
+            values << next_superclass.__send__(method)
+            next_superclass = next_superclass.superclass
+          end
+
+          values
         end
 
         protected
@@ -121,7 +158,7 @@ class AngryMob
         def initialize_added
         end
 
-      end
-    end
-  end
-end
+      end # module ClassMethods
+    end # module Tracking
+  end # class Target
+end # class AngryMob

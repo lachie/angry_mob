@@ -8,7 +8,12 @@ class AngryMob
 
     include Api
 
-    attr_reader :mob, :name, :definition_file, :options, :predicate
+    attr_reader :mob, :name
+
+    # File in which the act was defined
+    attr_reader :definition_file
+
+    attr_reader :options, :predicate
 
     NullMobInstance = NullMob.new
     BlankAct = lambda {|*|}

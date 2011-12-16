@@ -16,6 +16,8 @@ class AngryMob
         super
         path, = caller[0].partition(":")
         klass.definition_file = path
+
+        # Method#source_location ?
       end
 
 
@@ -72,6 +74,8 @@ class AngryMob
 
     #end
 
+
+    # The file in which the Actor is defined
     def definition_file; self.class.definition_file end
 
 

@@ -12,12 +12,14 @@ class AngryMob
     require "angry_mob/target/class_api"
     require "angry_mob/target/internal_api"
     require "angry_mob/target/calling"
+    require "angry_mob/target/resources"
 
 
     include Tracking
     include ClassApi
     include InternalApi
     include Calling
+    include Resources
 
 
     def nickname
@@ -25,7 +27,13 @@ class AngryMob
     end
 
 
-    attr_reader :ui, :node, :definition_file, :args, :current_action
+    attr_reader :ui, :node
+
+
+    # The file in which the target was called
+    attr_reader :call_file
+
+    attr_reader :args, :current_action
     attr_reader :act, :act_scheduler
 
 
@@ -37,12 +45,12 @@ class AngryMob
 
 
     def bind_act(act)
-      @act             = act
+      @act           = act
 
-      @definition_file = act.definition_file
-      @ui              = act.ui
-      @node            = act.node
-      @act_scheduler   = act.act_scheduler
+      @call_file     = act.definition_file
+      @ui            = act.ui
+      @node          = act.node
+      @act_scheduler = act.act_scheduler
     end
 
 

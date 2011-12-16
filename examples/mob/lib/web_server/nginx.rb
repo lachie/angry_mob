@@ -5,6 +5,6 @@ class Nginx < WebServer
     puts "nginx!"
     puts definition_file
 
-    file "/tmp/thing.txt", :src => "thething.txt"
+    foo "/tmp/thing.txt", :src => "thething.txt"
   end
 end

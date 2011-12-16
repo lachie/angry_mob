@@ -22,7 +22,7 @@ class AngryMob
       def run!
         AngryMob::Act::Api.running do
           # fire initial events
-          seed_events.tapp(:seed).each do |event|
+          seed_events.each do |event|
             fire event
           end
 
