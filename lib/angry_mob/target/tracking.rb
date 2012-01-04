@@ -24,11 +24,19 @@ class AngryMob
         # Whenever a class inherits from AngryMob::Target, we should track the
         # class and the file on AngryMob::Target::Tracking. This is the method responsible for it.
         #
-        def register_klass_file(klass) #:nodoc:
-          nickname = klass.nickname.to_s
-          file = caller[1].match(/(.*):\d+/)[1]
+        def register_klass_file(klass, nickname = nil) #:nodoc:
+          nickname ||= klass.nickname
+          nickname = nickname.to_s
 
-          klass.definition_file = file
+          # no nickname was given and klass is anonymous. We need to bail.
+          if nickname[/^#<class/]
+            # XXX print a warning?
+            return
+          end
+
+          file = caller[1].match(/(.*):\d+/)[1].tapp
+
+          klass.definition_file = file if klass.respond_to?(:definition_file)
 
           AngryMob::Target::Tracking.subclasses[nickname] = klass unless AngryMob::Target::Tracking.subclasses.key?(nickname)
 
