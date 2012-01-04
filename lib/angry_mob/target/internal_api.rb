@@ -39,6 +39,11 @@ class AngryMob
       end
 
 
+      def run_target(name, *args, &blk)
+        act.__run_target(name, *args, &blk)
+      end
+
+
       # returns the default object
       # targets can customise this
       # the default is the default_object argument. 
