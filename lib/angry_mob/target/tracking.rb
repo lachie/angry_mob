@@ -96,7 +96,7 @@ class AngryMob
         def definition_file; @definition_file end
 
         def definition_file_chain
-          from_superclass_chain(:definition_file).tapp(:defs)
+          from_superclass_chain(:definition_file)
         end
         
 
